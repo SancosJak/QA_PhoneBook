@@ -4,20 +4,20 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class CreateAccountTest extends TestBase {
+public class LoginTests extends TestBase{
 
     @Test
-    public void registerExistedUserNegativeTest() {
+    public  void loginRegisteredUserPositiveTest(){
         click(By.cssSelector("[href='/login']"));
 
         type(By.name("email"), "example@gma.com");
 
         type(By.name("password"), "Pa$sWord1");
 
-        click(By.name("registration"));
+        click(By.name("login"));
 
-//        Assert.assertTrue(isElementPresent(By.cssSelector("button")));
-        Assert.assertTrue(isAlertPresent());
+        Assert.assertTrue(isElementPresent(By.cssSelector("button")));
+
     }
 
 }
