@@ -1,20 +1,25 @@
 package com.phonebook.tests;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class CreateAccountTest extends TestBase {
 
+    @BeforeMethod
+    public void ensurePrecondition(){
+        if (!isLoginLinkPresent()){
+            clickOnSignOutButton();
+        }
+    }
+
     @Test
     public void registerExistedUserNegativeTest() {
-        click(By.cssSelector("[href='/login']"));
+        clickOnLoginLink();
 
-        type(By.name("email"), "example@gma.com");
+        fillLoginRegisterForm(new User().setEmail("example@gma.com").setPassword("Pa$sWord1"));
 
-        type(By.name("password"), "Pa$sWord1");
-
-        click(By.name("registration"));
+        clickOnRegistrationButton();
 
 //        Assert.assertTrue(isElementPresent(By.cssSelector("button")));
         Assert.assertTrue(isAlertPresent());
