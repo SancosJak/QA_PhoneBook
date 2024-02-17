@@ -1,5 +1,7 @@
 package com.phonebook.tests;
 
+import com.phonebook.models.Contact;
+import com.phonebook.models.User;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -8,27 +10,33 @@ import org.testng.annotations.Test;
 public class AddNewContactTests extends TestBase{
     @BeforeMethod
     public void precondition(){
-        if (!isLoginLinkPresent()){
-            clickOnSignOutButton();
+        if (!app.getUser().isLoginLinkPresent()){
+            app.getUser().clickOnSignOutButton();
         }
-        clickOnLoginLink();
+        app.getUser().clickOnLoginLink();
 
-        fillLoginRegisterForm(new User().setEmail("example@gma.com").setPassword("Pa$sWord1"));
+        app.getUser().fillLoginRegisterForm(new User().setEmail("example@gma.com").setPassword("Pa$sWord1"));
 
-        clickOnLoginButton();
+        app.getUser().clickOnLoginButton();
     }
     @Test
     public void addNewContactPositiveTest() {
-        clickOnAddLink();
-        fillContactForm("Karl", "Adam", "1234567890", "adam@gm.com", "Berlin", "goalKeeper");
-        clickOnSaveButton();
-        Assert.assertTrue(isContactCreated("Karl"));
+        app.getContact().clickOnAddLink();
+        app.getContact().fillContactForm(new Contact()
+                .setName("Karl")
+                .setLastname("Adam")
+                .setPhone("1234567890")
+                .setEmail("adam@gm.com")
+                .setAddress("Berlin")
+                .setDescription("goalKeeper"));
+        app.getContact().clickOnSaveButton();
+        Assert.assertTrue(app.getContact().isContactCreated("Karl"));
 
     }
 
     @AfterMethod
     public void postCondition() {
-        removeContact();
+        app.getContact().removeContact();
     }
 
 }
